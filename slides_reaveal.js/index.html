@@ -1,0 +1,559 @@
+
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Acquisition de données pour la data science</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section>
+					<h3>Acquisition de données pour la data science</h3>
+					<a href="https://revealjs.com">
+						<img src="https://www.thibautderoux.com/wp-content/uploads/2020/08/Big-Data.jpg" alt="big data image" style="height: 280px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+					</a>
+					<p>
+						<small>Cours DESU AMSE <a href="adrienpacifico.github.io"> Adrien Pacifico</a> </small>
+						<br>
+						<small>adrienpacifico@gmail.com </small>
+					</p>
+					</section>
+					<section data-markdown>
+						
+						<textarea data-template>
+						#### Comment acquérir de la donnée pour des projets de data science ? 
+						- Télécharger/acquerir un fichier  <!-- .element: class="fragment" data-fragment-index="1" -->
+							- Depuis un site web en récupérant un seul fichier manuellement.  <!-- .element: class="fragment" data-fragment-index="2" -->
+							- Depuis un site web en téléchargeant automatiquement un ou plusieurs fichiers.  <!-- .element: class="fragment" data-fragment-index="3" -->
+						- Utiliser une API <!-- .element: class="fragment" data-fragment-index="4" -->
+						- Récupérer les données sur une page web (scrapping), ou plusieurs crawling <!-- .element: class="fragment" data-fragment-index="5" -->
+						</textarea>
+					  </section>
+					<section data-markdown style= "text-align: left;font-size: 80%; width: 140%;">
+					<textarea data-template>
+						## Plan du cours
+						### Jour 1
+						1. Introduction Générale  <!-- .element: class="fragment" data-fragment-index="1" -->
+						2. Web scraping  <!-- .element: class="fragment" data-fragment-index="2" -->
+						3. API REST  <!-- .element: class="fragment" data-fragment-index="3" -->
+						4. Trouver des données sur le web.  <!-- .element: class="fragment" data-fragment-index="4" -->  
+
+						### Jour 2: Projet prédiction prix immobilier <!-- .element: class="fragment" data-fragment-index="5" -->
+						1. Faire un modèle prédictif de l'immobilier Français/Marseillais  <!-- .element: class="fragment" data-fragment-index="6" -->
+						2. Trouver et ajouter d'autres données <!-- .element: class="fragment" data-fragment-index="7" -->
+						3. API OSM<!-- .element: class="fragment" data-fragment-index="8" -->
+						4. Trouver des données sur le web.  <!-- .element: class="fragment" data-fragment-index="9" -->
+					</textarea>
+					</section>
+				</section>
+				<section>					
+					<section data-markdown>	
+					<textarea data-template>
+					#### Introduction Générale
+					Pourquoi acquérir de la donnée ?    
+
+
+					Pour faire du ML.   <!-- .element: class="fragment" data-fragment-index="1" -->
+					</textarea>
+				  </section>
+				<section data-markdown>
+					<section data-markdown>
+						
+						<textarea data-template>
+						Pourquoi de la donnée (en plus) ?   
+
+
+						Permet d'ajouter des features liées aux processus générateur de données à notre modèle.   <!-- .element: class="fragment" data-fragment-index="1" -->  
+						- [Data centric vs model centric AI](https://spectrum.ieee.org/andrew-ng-data-centric-ai):  <!-- .element: class="fragment" data-fragment-index="2" -->
+							- Focus more on data quality and diversity than data quality and model optimisation.<!-- .element: class="fragment" data-fragment-index="2" --> 
+						</textarea>
+					  </section>
+					<section data-markdown>
+						<textarea data-template>
+						#### Objectif de ce cours ?  
+						Récupérer de la donnée par divers moyen pour faire des projets de data science.
+						
+						#### Objectif secondaire:
+						Essayer d'appliquer les meilleures pratiques.
+						</textarea>
+					</section>
+					<section data-markdown>
+						
+						<textarea data-template>
+						#### Environnement de développement
+						- IDE -> your choice, jupyterlab pour mobile
+						- environnement -> Image docker jupyterlab avec un conda
+						</textarea>
+					  </section>
+				</section>
+					<section  data-markdown>
+						<textarea data-template>
+							### Trouver des données (fichiers) sur le web.
+							- https://datasetsearch.research.google.com/
+							- [data.gouv.fr](www.data.gouv.fr)
+							- insee.fr  
+							- https://public.opendatasoft.com/explore/?sort=modified
+							- kaggle, [OpenML](https://www.openml.org)
+							- Autre (tout autre site/API/web scraping) (ou un article qui liste des sources : [exemple](https://www.kdnuggets.com/2021/05/awesome-list-datasets.html?fbclid=IwAR2ByTY3a_JFZoCkUsiSZl4gEcedhX2QdizAfFPMszUaTVDaAKfbwu5uTO0))
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							##### Important d'automatiser la requête pour rendre la recherche reproductible.
+							- Cookie cutter data science
+							- Permalien du fichier
+							- Lien de la page ou le fichier a été trouvé
+							- Methodologie pour trouver la données
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							### Exercice:
+							Trouver et ouvrir des fichiers qui pourraient vous intéresser.
+							- Projet accidents de la route (radars, météo, distance à un hôpital, prix des carburants, autre ?)
+
+						</textarea>
+					</section>
+				</section>
+				</section>
+				<section>
+					<section  data-markdown>
+						<textarea data-template>
+							### Télécharger des fichiers et lire des fichiers
+
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							Télécharger un fichier peut se faire facilement manuellement via son navigateur internet.
+							Il est intéressant de le faire via du code:
+							- Évite les erreurs humaines.
+							- Permet de savoir d'où vient la donnée
+							> Where did the shapefiles get downloaded from for the geographic plots?
+							- S'économiser de nombreux clics !
+
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							Bien souvent en observant l'URL on peut conclure sur comment télécharger une série de fichiers pour des années différentes des départements différents, etc.
+							```python
+							import wget
+							wget.download(url, file_name)
+							```
+						</textarea>
+					</section>
+
+					<section  data-markdown>
+						<textarea data-template>
+							Mise en pratique passe au python (Lecture_de_fichiers_sous_plusieurs_formats.ipynb)
+						</textarea>
+					</section>
+
+				</section>
+				<section>
+					<section  data-markdown>
+						<textarea data-template>
+							### API
+
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+						Une interface de programmation applicative, est une interface qui définit des interactions entre plusieurs logiciels.
+						Elle définit les types d'appels ou requêtes qui peuvent être faits, comment les faire, le format des données, etc.
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							Une interface, utilisée par des programmes pour interagir sur des applications.
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+						1. Web API:  
+							Celles dont on parle en général.
+						2. Les autres: 
+							- librairies et framework (e.g. l'api de pandas)
+							- Autres
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+						### Web API:
+
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							WEB API:
+							Une web API permet de faire des requêtes http (POST, GET, PUT, DELETE) 
+							qui permettent d'avoir une réponse sous forme de json (parfois de xml).
+
+							Il existe de nombreux services qui permettent d'utiliser une api. 
+						</textarea>
+					</section>
+				<section  data-markdown style =  "text-align: left;font-size: 95%; width: 130%;">
+					<textarea data-template>
+						API Rest:  
+						https://www.youtube.com/watch?v=BbZnsN3LSbY
+
+						Le type d'API le plus utilisée sur le web.
+						Une interface qui permet d'établir une communication entre votre ordinateur et un serveur afin qu'il fournisse des données. 
+
+						<pre><code data-trim data-noescape>
+							http://api.openweathermap.org/data/2.5/weather?
+							lat={lat}&lon={lon}&appid={your%api%key}
+						</code></pre>
+
+					</textarea>
+				</section>
+					<section  data-markdown style =  "text-align: left;font-size: 100%; width: 140%;">
+					<textarea data-template>
+						API:
+						1. Publique vs. Privée
+						2. Gratuite vs. Payante
+						3. Avec  ou sans authentifications (clé API)
+
+						https://github.com/public-apis/public-apis  
+
+						https://pokeapi.co/api/v2/pokemon/ditto  
+
+						https://ladataverte.fr
+					</textarea>
+					</section>
+					<section  data-markdown>
+					<textarea data-template>
+						### API
+						A : https://www.programmableweb.com/
+						
+					</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							### Utiliser une API 
+							- coller l'appel dans son navigateur.
+							- la commande CURL
+							- avec Python
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							### Comment utiliser une API en Python ?
+							```Python
+							import requests
+							parameters= {'lat':42.1234, 'long':21.345}
+							response = requests.get("http://api.openweathermap.org/data/2.5/weather",
+										parameters)
+							print(response.status_code) ## 200 si ok, voir https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+							
+							```
+							
+							
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							Tips:
+							- l'utilisation d'API peut varier dans les standards
+							- rechercher des exemples en python, puis les modifier
+								- chercher exemples en python:
+									- directement dans la documentation ([swagger](https://petstore.swagger.io/#/pet/findPetsByStatus))
+									- google
+									- github/gitlab
+									- autre
+						</textarea>
+					</section>
+
+					<section  data-markdown>
+						<textarea data-template>
+							### Exemple utilisation d'API JC-Decaux
+							https://github.com/SylvainDe/JcDecauxVelibApiTestPython/blob/master/velib.py
+							https://developer.jcdecaux.com/#/home
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							### Passage à la pratique
+							(1- appels_api.ipynb , JCDecaux_api_call.ipynb)
+
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							### Exercices:
+							- Ouvrir un compte utilisateur et récupérer le nombre de vélo disponible par borne chez JC-Decaux
+							- Prennez l'adresse renseignée dans la base des accidents de la route et vérifier si vous obtenez les mêmes points GPS.  
+							
+						</textarea>
+					</section>
+				</section>
+
+
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+							Web Scraping
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							Le web scraping consiste à récupérer des données spécifiques sur une ou plusieurs page web.
+							Quand on récupère l'ensemble d'un site web, on parle de web crawling.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							Exemple code source page web.
+							
+						</textarea>
+					</section>
+					<section data-markdown style =  "text-align: left;font-size: 80%; width: 100%;">
+						<textarea data-template>
+							Web Scraping = Game over  
+							Il faut tout faire pour éviter de passer par du web scraping. Cela doit être une solution de dernier recours.
+
+							Solutions en amont:
+							1. Trouver une base de donnée contenant déjà les informations
+							2. Trouver une API permettant d'obtenir les informations
+							3. Contacter le gestionnaire du site web pour essayer d'obtenir les informations (achat si entreprise, 🐱 si recherche/associatif/projet perso )
+							4. Web Scraping
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							#### Pourquoi le Web Scraping c'est pas terrible ?
+							1. Mauvais dans un pipeline de données
+							2. Potentiellement illégal (risque juridique : https://www.sales-hacking.com/post/legal-web-scraping)
+							3. Demande des compétences techniques de plus en plus élevées (contre mesures anti-scrapping)
+								- cloacking, lien js, captcha, etc
+							4. Normalement plus long que toutes les autres solutions.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							#### Mauvais dans un pipeline de données
+							- Le format d'une page web peut changer à tout moment
+							- Le code développé peut devenir très coûteux à maintenir/avoir un gros coût de maintenance
+						</textarea>
+					</section>
+					<section data-markdown  style =  "text-align: left;font-size: 60%; width: 100%;">
+						<textarea data-template>
+							#### Potentiellement illégal
+							- Il existe un risque juridique à récupérer de la donnée.
+								- Ne respecte pas le terme of use du site
+								- A un coût pour le site et peut perturber son fonctionnement (38% du traffic web)/Dos attacks  
+
+							Normalement pas trop de risque si effectué sans connexion, sans faire trop de requêtes et si pas de réutilisation publique.  
+
+							Mais on reste dans un relatif flou juridique.
+							> Unfortunately, there’s not a cut-and-dry answer here. Some websites explicitly allow web scraping. Others explicitly forbid it. Many websites don’t offer any clear guidance one way or the other.
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							#### S'assurer de la légalité.
+							1. Conditions d'utilisation du site
+								- peuvent parfois préciser si on peut ou non crawler/scrapper/moissoner le site
+							2. Le robots.txt  
+								https://www.leboncoin.fr/robots.txt  
+								https://fr.wikipedia.org/robots.txt  
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+						####  Demande des compétences techniques
+						Demande de maîtriser:
+						1. Le html (et parfois plus javascript, nodeJS, etc)
+						2. De nouveaux outils (BeautifulSoup, Scrappy, Selenium)
+						3. Les anti-mesures pour échapper aux mesures anti-web scraping
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							####  Web Scraping
+							Librairies:
+							- BeautifulSoup $\rightarrow$ facile mais lent
+							- Scrappy $\rightarrow$ difficile, mais rapide (threading)
+							- Selenium $\rightarrow$ difficile, étudié pour du test ([blog post déconseillant selenium](http://buklijas.info/blog/2018/12/15/do-not-use-selenium-for-web-scraping/))
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							####  Web scraping avec BeautifulSoup
+							1. Télécharger une page web avec une URL (librairie `requests`)
+							2. Ouvrir le code HTML avec BeautifulSoup
+							3. Chercher les informations à partir des tags HTML et attributs css et tag javascript
+							4. les mettre dans une dataframe pandas
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							####  Principaux tags html
+							```html
+							<div> balise de type block
+							<span> balise de type inline
+							<iframe>
+							<h2> titre niveau 2
+							<a> lien hypertexte
+							<ul> liste (<ol> pour numéroté)
+							<table> tableau
+							<p> paragraphe
+							...
+							(liste absolument pas exhaustive)
+							```
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							Mais avant de se lancer dans du vrai web-scraping, on peut utiliser `pd.read_html("www.monsite.fr")`
+							- Cela va récupérer l'ensemble des tableaux (`<table>`) que l'on trouve dans une page web.
+
+						</textarea>
+					</section>
+					<section data-markdown>
+						<textarea data-template>
+							1. Projet Star Academy : Quel est l'age moyen des participants à la Star Academy ?
+							2. Projet Rolex:  
+								Est-ce que le prix des Rolex a un rendement supérieur au marché ?
+						</textarea>
+					</section>
+				</section>
+				<section>
+					<section  data-markdown>
+					<textarea data-template>
+						### Projet accident de la route
+						Vous venez d'être recruté par l’Observatoire national interministériel de la sécurité routière (ONISR) en tant que data scientist.  
+
+						On vous demande à partir des données interne de l'OSNIR à partir des fichiers BAAC en open data, mais aussi de toute autre donnée externe de créer de laà partir de ces données.						
+					</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							![](./images/Ds_project.png)		
+							(source Machine Learning Engineering with MLflow)		
+						</textarea>
+					</section>
+					<section  data-markdown>
+						<textarea data-template>
+							### Démarrer le projet
+							- Objectifs
+							- Créer un repo git, avec éventuellement une plateforme Devops en place
+							- Distance à un hôpital
+							- Les données que vous souhaitez !				
+						</textarea>
+						</section>
+
+					<section  data-markdown>
+					<textarea data-template>
+						### Données à rajouter
+						- Prix de l'essence
+						- Météo lors de l'accident
+						- Distance à un hôpital
+						- Les données que vous souhaitez !				
+					</textarea>
+					</section>
+
+					<section  data-markdown>
+					<textarea data-template>
+						### Bonnes pratiques:
+						- Image Docker (pour reproductibilité et mise en prod) (pourquoi docker : https://twitter.com/jeremyphoward/status/1298464399527514113?s=20)
+						- Cookie Cutter Data Science (pour pas être brouillon)
+						- MLFlow pour garder trace des modèles et des expérimentations.
+						- Pyjanitor (pour gagner du temps)
+						- test sur les données (des asserts, greater expectations, engarde, tests unitaires sur les fonctions,etc)
+					</textarea>
+					</section>
+
+
+
+
+
+				<section>
+					<section  data-markdown>
+					<textarea data-template>
+						### Projet immobilier
+						- DVM 2020
+						- Nettoyer rapidement
+						- Auto-ML rapide
+						- Rajouter des données pour voir l'augmentation de la performance.						
+					</textarea>
+					</section>
+
+					<section  data-markdown>
+					<textarea data-template>
+						### Données à rajouter
+						- Diagnostique énergétique
+						- Données sociales par IRIS (revenu, etc)
+						- Données sur les aménités (avec l'API openstreetmap)
+						  - Distance à une école, crèche, hopital, etc.
+						- Les données que vous souhaitez !				
+					</textarea>
+					</section>
+
+					<section  data-markdown>
+					<textarea data-template>
+						### Bonnes pratiques:
+						- Image Docker (pour reproductibilité et mise en prod) (pourquoi docker : https://twitter.com/jeremyphoward/status/1298464399527514113?s=20)
+						- Cookie Cutter Data Science (pour pas être brouillon)
+						- MLFlow pour garder trace des modèles et des expérimentations.
+						- Pyjanitor (pour gagner du temps)
+						- test sur les données (des asserts, greater expectations, engarde, tests unitaires sur les fonctions,etc)
+					</textarea>
+					</section>
+
+
+
+				</section>
+
+
+			</div>
+
+		</div>
+
+		<script src="plugin/math/math.js"></script>
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: 'c/t',
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [RevealZoom, RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+
+		</script>
+
+	</body>
+</html>
